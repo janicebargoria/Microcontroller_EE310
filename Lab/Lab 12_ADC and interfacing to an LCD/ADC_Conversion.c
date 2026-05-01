@@ -1,11 +1,24 @@
 /*
- * The purpose of this program is demonstrate How ADC operates. 
- * Conenct your input to RA0. 
- * Complete the code by modifying all the places identified by "DO:"
- * Use a port to represent the input voltage in binary.  
- * Author: Farid Farahmand
+ * Title: 12-bit ADC Voltage Measurement and LED Display using PIC18F46K42
+ *
+ * Description:
+ * This program demonstrates the operation of the Analog-to-Digital Converter (ADC)
+ * on the PIC18F46K42 microcontroller. An analog input voltage is applied to pin RA0 (AN0),
+ * converted into a 12-bit digital value, and displayed in binary form using LEDs.
+ *
+ * The lower 8 bits (LSB) are displayed on PORTD (RD0–RD7), and the upper 4 bits (MSB)
+ * are displayed on PORTB (RB0–RB3).
+ *
+ * The ADC uses VDD as the reference voltage (3.3V), and the program also calculates
+ * the corresponding analog voltage from the digital value.
+ *
+ * Hardware Connections:
+ * - Analog input → RA0 (AN0)
+ * - LEDs → RD0–RD7 (LSB), RB0–RB3 (MSB)
+ *
+ * Author: Janice Bargoria
+ * Date: 04/30/2026
  */
-
 
 // PIC18F46K42 Configuration Bit Settings
 
@@ -72,7 +85,7 @@
 #define _XTAL_FREQ 4000000                 // Fosc  frequency for _delay()  library
 #define FCY    _XTAL_FREQ/4
 
-#define Vref 3.3 // voltage reference 
+#define Vref 5 // voltage reference 
 int digital; // holds the digital value 
 float voltage; // hold the analog value (volt))
 char data[12];

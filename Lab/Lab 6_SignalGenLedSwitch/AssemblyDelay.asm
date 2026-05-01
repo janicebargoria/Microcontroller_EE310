@@ -6,10 +6,10 @@
 
 ; Inputs: Inner_loop ,Outer_loop 
 ; Outputs: PORTD
-; Date: Feb 24, 2024
+; Date: Mar 14, 2026
 ; File Dependencies / Libraries: None 
 ; Compiler: xc8, 2.4
-; Author: Farid Farahmand
+; Author: Janice Bargoria
 ; Versions:
 ;       V1.3: Changes the loop size
 ; Useful links: 

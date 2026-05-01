@@ -15,6 +15,8 @@
  * - WDT configured to ~1 second using WDTCON0
  * - Demonstrates automatic MCU reset via WDT
  *
+* Author: Janice Bargoria
+ * Date: 04/30/2026
  ********************************************************************/
 
 #include <xc.h>

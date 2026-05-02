@@ -1,21 +1,29 @@
 /*
- * Title: 12-bit ADC Voltage Measurement and LED Display using PIC18F46K42
+ * Title: 12-bit ADC Voltage Measurement using Upper 7-Bit LED Display
  *
  * Description:
  * This program demonstrates the operation of the Analog-to-Digital Converter (ADC)
- * on the PIC18F46K42 microcontroller. An analog input voltage is applied to pin RA0 (AN0),
- * converted into a 12-bit digital value, and displayed in binary form using LEDs.
+ * on the PIC18F46K42 microcontroller. An analog voltage is applied to pin RA0 (AN0)
+ * and converted into a 12-bit digital value using the ADC module.
  *
- * The lower 8 bits (LSB) are displayed on PORTD (RD0–RD7), and the upper 4 bits (MSB)
- * are displayed on PORTB (RB0–RB3).
+ * To simplify visualization, only the upper 7 bits of the ADC result are used.
+ * These bits are obtained by shifting the 12-bit digital value to the right by 5 bits.
+ * The resulting 7-bit value is then displayed on LEDs connected to PORTD (RD0–RD6).
  *
- * The ADC uses VDD as the reference voltage (3.3V), and the program also calculates
- * the corresponding analog voltage from the digital value.
+ * The program continuously performs ADC conversions and updates the LED output
+ * to reflect changes in the input voltage. The calculated voltage is also derived
+ * from the digital value using a reference voltage of 3.3V.
+ *
+ * Key Features:
+ * - Analog input via RA0 (AN0)
+ * - 12-bit ADC conversion
+ * - Upper 7-bit binary display on LEDs
+ * - Voltage calculation from ADC result
  *
  * Hardware Connections:
- * - Analog input → RA0 (AN0)
- * - LEDs → RD0–RD7 (LSB), RB0–RB3 (MSB)
- *
+ * - RA0 → Analog input (0–3.3V)
+ * - RD0–RD6 → LEDs (binary output)
+ * - All grounds must be connected together
  * Author: Janice Bargoria
  * Date: 04/30/2026
  */
@@ -96,10 +104,6 @@ void ADC_Init(void) // DO: Declare void ADC_Init
     LATD = 0;
     ANSELD = 0x00;
     
-    TRISB = 0; //RD As Output
-    LATB = 0;
-    ANSELB = 0x00;
-    
     TRISAbits.TRISA0 = 1;  //Set RA0 to input
     ANSELAbits.ANSELA0 =1;  //Set RA0 to analog
     
@@ -140,10 +144,7 @@ void main() {
         digital = (ADRESH<<8) | (ADRESL);/*Combine 8-bit LSB and 2-bit MSB*/
         voltage = digital*((float)Vref/(float)(4096));// DO: define voltage = Vref/4096 (note that voltage is float type
          
-        
-         LATD =(digital>>5); 
-         //LATB =(digital && 0x1F);
-         LATB = (ADRESH & 0x0F);
+         LATD = (digital >> 5) & 0x7F;
          
          // DO: Write a code to translate the values from ADRESH:ADRESL register 
         //         pair to IO Port. In this case we can connect ADRESL to Port D
